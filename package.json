@@ -18,7 +18,9 @@
   "homepage": "https://github.com/AlinManole/benevolat-konexio-backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^15.0.0",
     "express": "^4.17.2",
+    "express-session": "^1.17.2",
     "express-validator": "^6.14.0",
     "mongoose": "^6.1.8",
     "morgan": "^1.10.0",
