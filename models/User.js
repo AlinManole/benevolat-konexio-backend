@@ -29,14 +29,16 @@ telephone : {
     unique: true
 },
 program : {
-  type: Schema.Types.ObjectId
+  type: Object
 }, 
 messages: [{
-  type: Schema.Types.ObjectId
+  type: Schema.Types.ObjectId,
+  ref : "Message"
 }]
 , 
-conversation: [{
-  type: Schema.Types.ObjectId
+conversations: [{
+  type: Schema.Types.ObjectId,
+  ref : "Conversation" 
 }]
 ,
 role: {
@@ -46,7 +48,8 @@ distanciel: {
   type: Boolean
 },
 courses: [{
-  type: Schema.Types.ObjectId
+  type: Schema.Types.ObjectId,
+  ref : "Cours"
 }]
 },{
   timestamps: true
