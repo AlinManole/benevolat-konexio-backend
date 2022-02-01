@@ -28,7 +28,8 @@ telephone : {
     required: true
 },
 program : {
-  type: Object
+  type: Schema.Types.ObjectId,
+  ref : "Program"
 }, 
 messages: [{
   type: Schema.Types.ObjectId,

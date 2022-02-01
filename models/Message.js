@@ -2,16 +2,19 @@ const { Schema, model } = require("mongoose")
 
 const MessageSchema = Schema({
     from: {
-        type: Object
+        type: Schema.Types.ObjectId,
+        ref : "User"
     },
     to: {
-        type: Object
+        type: Schema.Types.ObjectId,
+        ref : "User"
     },
     contents: {
         type: String,
     },
     conversation: {
-        type: Object
+        type: Schema.Types.ObjectId,
+        ref : "Conversation"
     },
     object: {
         type: String
