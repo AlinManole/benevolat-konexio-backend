@@ -35,6 +35,18 @@ app.post("/login",
 passport.authenticate("local"),
 async (req,res) => {
     // console.log(req.user)
+    if (req.user) {
+        req.logIn(req.user, (err) => {
+        
+            if (err) throw res.status(500).json({error: err}); 
+            return res.json(req.user);   
+        })
+    }
 })
+
+app.delete("/logout", (req,res) => {
+    req.logout();
+    res.status(200).send("ok");
+});
 
 module.exports = app;
