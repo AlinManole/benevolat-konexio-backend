@@ -30,6 +30,7 @@ const UserSchema = Schema(
     },
     program: {
       type: Object,
+      default: {}
     },
     messages: [
       {
@@ -45,9 +46,11 @@ const UserSchema = Schema(
     ],
     role: {
       type: String,
+      default: "volonteer"
     },
     distanciel: {
       type: Boolean,
+      default: false
     },
     courses: [
       {
