@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose")
 
-const UserSchema = Schema({
+const MessageSchema = Schema({
     from: {
         type: Object
     },
@@ -21,6 +21,6 @@ const UserSchema = Schema({
 })
 
 
-const User = model('Conversation', ConversationSchema)
+const Message = model('Message', MessageSchema)
 
-module.exports = Conversation
+module.exports = Message
