@@ -25,8 +25,7 @@ password : {
 },
 telephone : {
     type : String,
-    required: true,
-    unique: true
+    required: true
 },
 program : {
   type: Object
