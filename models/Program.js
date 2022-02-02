@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose")
 
-const ProgramSchema = Program({
+const ProgramSchema = Schema({
     name: {
         type: Sring
     },
