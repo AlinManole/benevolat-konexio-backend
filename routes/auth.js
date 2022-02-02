@@ -31,18 +31,34 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post("/login",
+app.post("/login/volunteer",
 passport.authenticate("local"),
 async (req,res) => {
-    // console.log(req.user)
-    if (req.user) {
-        req.logIn(req.user, (err) => {
-        
-            if (err) throw res.status(500).json({error: err}); 
-            return res.json(req.user);   
-        })
+    console.log(req.user.role)
+    if (req.user && req.user.role === "volunteer") {
+            req.logIn(req.user, (err) => {
+                if (err) throw res.status(500).json({error: err}); 
+                return res.json(req.user);   
+            }) 
+    } else {
+        res.status(500).json({error: "not auth"})
     }
 })
+
+app.post ("/login/admin",
+passport.authenticate("local"),
+async (req,res) => {
+    if (req.user && req.user.role === "admin") {
+        req.logIn(req.user, (err) => {
+            if (err) throw res.status(500).json({error: err});
+            return res.json(req.user);
+        })
+    } else {
+        res.status(500).json({error: "not auth"})
+    }
+})
+
+
 
 app.delete("/logout", (req,res) => {
     req.logout();
