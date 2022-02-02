@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose")
 
 const NewsSchema = Schema({
     title: {
-        type: String
+        type: String    
     },
     content: {
         type: String
