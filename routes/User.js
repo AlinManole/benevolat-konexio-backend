@@ -3,7 +3,7 @@ const app = express();
 
 const User = require("../models/User");
 
-app.get("/users", async (req, res) => {
+app.get("/volunteers", async (req, res) => {
   try {
     const users = await User.find().exec();
 
@@ -14,7 +14,7 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.get("/:_id", async (req, res) => {
+app.get("/volunteers/:_id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -27,7 +27,7 @@ app.get("/:_id", async (req, res) => {
   }
 });
 
-app.put("/:_id", async (req, res) => {
+app.put("/volunteers/:_id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -37,28 +37,62 @@ app.put("/:_id", async (req, res) => {
         $set: { ...req.body },
       },
       {
-        new: true
+        new: true,
       }
-    ).exec()
+    ).exec();
 
-    res.json(user)
+    res.json(user);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: err });
   }
 });
 
-app.delete('/:id', async(req, res) => {
-  const { id } = req.params
+app.delete("/volunteers/:id", async (req, res) => {
+  const { id } = req.params;
 
   try {
-    await User.findOneAndDelete({ _id: id }).exec()
+    await User.findOneAndDelete({ _id: id }).exec();
 
-    res.json({ success: "user is deleted" })
+    res.json({ success: "user is deleted" });
   } catch (err) {
-    console.log(err)
-    res.status(500).json({ error: err })
+    console.log(err);
+    res.status(500).json({ error: err });
   }
-})
+});
+
+app.get("admin/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const admin = await User.findById(id).exec();
+
+    res.json(admin);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err });
+  }
+});
+
+app.put("admin/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { $in: [{ _id: id }, { role: "admin" }] },
+      {
+        $set: { ...req.body },
+      },
+      {
+        new: true,
+      }
+    ).exec();
+
+    user.json(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err });
+  }
+});
 
 module.exports = app;
