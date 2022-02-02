@@ -46,7 +46,7 @@ const UserSchema = Schema(
     ],
     role: {
       type: String,
-      default: "volonteer"
+      default: "volunteer"
     },
     distanciel: {
       type: Boolean,
