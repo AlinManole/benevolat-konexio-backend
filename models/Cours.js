@@ -1,4 +1,7 @@
 const { Schema, model } = require("mongoose")
+const User = require("./User")
+const Program = require("./Program")
+
 
 const CoursSchema = Schema({
     program: {
@@ -35,6 +38,14 @@ const CoursSchema = Schema({
     }
 }, {
     timestamps: true
+})
+CoursSchema.post("save", async(cours)=>{
+await Program.findByIdAndUpdate(cours.program, {$push: {cours:cours._id}})
+})
+
+CoursSchema.pre("findByIdAndDelete", async(cours)=>{
+    await Program.findByIdAndUpdate(cours.program, {$pull: {cours:cours._id}})
+    await User.updateMany({cours:cours._id}, {$pull: {cours:cours._id}})
 })
 
 const Cours = model('Cours', CoursSchema)

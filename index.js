@@ -14,6 +14,8 @@ app.use(express.json())
 const auth = require ("./routes/auth")
 const user = require('./routes/user')
 const news = require("./routes/news")
+const program = require("./routes/program")
+const cour = require("./routes/cour")
 
 mongoose.connect(dbUrl)
 const db = mongoose.connection
@@ -43,6 +45,8 @@ app.use(passport.session())
 app.use("/user", user)
 app.use("/auth", auth)
 app.use("/news", news)
+app.use("/program", program)
+app.use("/cour", cour)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
