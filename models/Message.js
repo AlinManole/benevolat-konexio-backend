@@ -23,6 +23,9 @@ const MessageSchema = Schema({
     timestamps: true
 })
 
+MessageSchema.post("save", async (message) => {
+    await Conversation.findOneAndUpdate({users: message.from, users: message.to},{$push:{conversation: message._id}},{new: true}).exec()
+})
 
 const Message = model('Message', MessageSchema)
 
