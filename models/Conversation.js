@@ -15,6 +15,6 @@ messages: [{
 })
 
 
-const User = model('Conversation', ConversationSchema)
+const Conversation = model('Conversation', ConversationSchema)
 
 module.exports = Conversation
