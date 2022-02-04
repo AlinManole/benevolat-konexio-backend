@@ -61,11 +61,11 @@ app.delete("/volunteers/:id", async (req, res) => {
   }
 });
 
-app.get("admin/:id", async (req, res) => {
+app.get("/admin", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const admin = await User.findById(id).exec();
+    const admin = await User.findOne({ role: "admin" }).exec();
 
     res.json(admin);
   } catch (err) {
@@ -74,12 +74,12 @@ app.get("admin/:id", async (req, res) => {
   }
 });
 
-app.put("admin/:id", async (req, res) => {
+app.put("/admin", async (req, res) => {
   const { id } = req.params;
 
   try {
     const user = await User.findOneAndUpdate(
-      { $in: [{ _id: id }, { role: "admin" }] },
+      { role: "admin" },
       {
         $set: { ...req.body },
       },
