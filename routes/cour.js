@@ -20,7 +20,9 @@ app.post("/", async (req, res) => {
 
 app.get("/", async (req,res) => {
     try {
-        const cours = await Cours.find().exec()
+        const cours = await Cours.find()
+        .populate('program')
+        .exec()
         res.json(cours)
     } catch (err) {
         console.log(err)

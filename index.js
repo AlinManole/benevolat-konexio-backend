@@ -15,7 +15,8 @@ const auth = require ("./routes/auth")
 const user = require('./routes/user')
 const news = require("./routes/news")
 const program = require("./routes/program")
-const cour = require("./routes/cour")
+const cours = require("./routes/cour")
+const message = require("./routes/message")
 
 mongoose.connect(dbUrl)
 const db = mongoose.connection
@@ -42,11 +43,12 @@ app.use(cors({
 app.use(passport.initialize())
 app.use(passport.session()) 
 
-app.use("/user", user)
+app.use("/users", user)
 app.use("/auth", auth)
 app.use("/news", news)
-app.use("/program", program)
-app.use("/cour", cour)
+app.use("/programs", program)
+app.use("/courses", cours)
+app.use("/messages", message)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)

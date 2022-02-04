@@ -5,7 +5,7 @@ const User = require("../models/User");
 
 app.get("/volunteers", async (req, res) => {
   try {
-    const users = await User.find().exec();
+    const users = await User.find({role: "volunteer"}).exec();
 
     res.json(users);
   } catch (err) {

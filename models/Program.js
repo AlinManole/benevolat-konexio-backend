@@ -2,10 +2,12 @@ const { Schema, model } = require("mongoose")
 
 const ProgramSchema = Schema({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     hours: {
-        type: Number
+        type: Number,
+        required: true
     },
     cours: [{
         type: Schema.Types.ObjectId,

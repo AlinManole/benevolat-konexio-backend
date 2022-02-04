@@ -6,35 +6,40 @@ const Program = require("./Program")
 const CoursSchema = Schema({
     program: {
         type: Schema.Types.ObjectId,
-        ref: "Program"
+        ref: "Program",
+        required: true
     },
     days: [{
         user: {
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'User',
         },
         date: {
             type: Date
         }
     }],
     numberOfPlace: {
-        type: Number
+        type: Number,
+        required: true
     },
     startDate: {
-        type: Date
+        type: Date,
+        required: true
     },
     endDate: {
-        type: Date
+        type: Date,
+        required: true
     },
     users: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
     level: {
-        type: String
+        type: String,
     },
     adress: {
-        type: String
+        type: String,
+        required: true
     }
 }, {
     timestamps: true
