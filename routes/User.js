@@ -62,8 +62,6 @@ app.delete("/volunteers/:id", async (req, res) => {
 });
 
 app.get("/admin", async (req, res) => {
-  const { id } = req.params;
-
   try {
     const admin = await User.findOne({ role: "admin" }).exec();
 
@@ -75,8 +73,6 @@ app.get("/admin", async (req, res) => {
 });
 
 app.put("/admin", async (req, res) => {
-  const { id } = req.params;
-
   try {
     const user = await User.findOneAndUpdate(
       { role: "admin" },
