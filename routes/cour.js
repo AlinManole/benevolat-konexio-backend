@@ -45,7 +45,7 @@ app.get("/:id_session", async (req,res) => {
 app.put("/:id_cours", async (req,res) => {
     const { id_cours } = req.params
     try {
-        const cours = Cours.findByIdAndUpdate(id_cours,{$set: {...req.body}},{new: true}).exec()
+        const cours = await Cours.findByIdAndUpdate(id_cours, {$set: {...req.body}}, {new: true}).exec()
         res.json(cours)
     } catch(err) {
         console.log(err)
