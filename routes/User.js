@@ -5,7 +5,7 @@ const User = require("../models/User");
 
 app.get("/volunteers", async (req, res) => {
   try {
-    const users = await User.find().exec();
+    const users = await User.find({role: "volunteer"}).exec();
 
     res.json(users);
   } catch (err) {
@@ -61,11 +61,9 @@ app.delete("/volunteers/:id", async (req, res) => {
   }
 });
 
-app.get("admin/:id", async (req, res) => {
-  const { id } = req.params;
-
+app.get("/admin", async (req, res) => {
   try {
-    const admin = await User.findById(id).exec();
+    const admin = await User.findOne({ role: "admin" }).exec();
 
     res.json(admin);
   } catch (err) {
@@ -74,12 +72,10 @@ app.get("admin/:id", async (req, res) => {
   }
 });
 
-app.put("admin/:id", async (req, res) => {
-  const { id } = req.params;
-
+app.put("/admin", async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(
-      { $in: [{ _id: id }, { role: "admin" }] },
+      { role: "admin" },
       {
         $set: { ...req.body },
       },
