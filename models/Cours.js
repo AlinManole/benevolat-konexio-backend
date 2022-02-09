@@ -48,6 +48,8 @@ CoursSchema.pre("findByIdAndDelete", async(cours)=>{
     await User.updateMany({cours:cours._id}, {$pull: {cours:cours._id}})
 })
 
+
+
 const Cours = model('Cours', CoursSchema)
 
 module.exports = Cours

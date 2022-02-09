@@ -7,6 +7,7 @@ try {
     const message = await new Message({...req.body})
     message.save(async(err, message) => {
         if (err) {
+            console.log(err)
             res.status(500).json({error: err})
             return;
         }

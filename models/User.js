@@ -1,4 +1,7 @@
 const { Schema, model } = require("mongoose");
+const Cours = require("./Cours")
+const Conversation = require("./Conversation")
+
 
 const UserSchema = Schema(
   {
@@ -21,7 +24,7 @@ const UserSchema = Schema(
     },
     password: {
       type: String,
-      require: true,
+      required: true,
       minlength: 8,
     },
     telephone: {
@@ -46,7 +49,7 @@ const UserSchema = Schema(
     ],
     role: {
       type: String,
-      default: "volunteer"
+      default: "volunteer",
     },
     distanciel: {
       type: Boolean,
@@ -63,7 +66,16 @@ const UserSchema = Schema(
     timestamps: true,
   }
 );
+UserSchema.pre("findOneAndDelete", async(user)=>{
+  await Cours.updateMany({users: user._id},{$pull:{users: user._id}})
+})
 
+
+UserSchema.post("save", async(user)=>{
+  const admin = await User.findOne({role:"admin"}).exec()
+  const conversation = await new Conversation({$push:{users: [user._id, admin._id]}})
+  conversation.save()
+})
 const User = model("User", UserSchema);
 
 module.exports = User;
