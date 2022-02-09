@@ -10,10 +10,10 @@ const CoursSchema = Schema({
         required: true
     },
     days: [{
-        user: {
+        users: [{
             type: Schema.Types.ObjectId,
             ref: 'User',
-        },
+        }],
         date: {
             type: Date
         }
@@ -44,8 +44,9 @@ const CoursSchema = Schema({
 }, {
     timestamps: true
 })
+
 CoursSchema.post("save", async(cours)=>{
-await Program.findByIdAndUpdate(cours.program, {$push: {cours:cours._id}})
+    await Program.findByIdAndUpdate(cours.program, {$push: {cours:cours._id}})
 })
 
 CoursSchema.pre("findByIdAndDelete", async(cours)=>{
