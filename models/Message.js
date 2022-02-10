@@ -26,28 +26,26 @@ const MessageSchema = Schema({
 })
 
 MessageSchema.post("save", async (message) => {
-    const existingConversation = await Conversation.findOne({ users: message.from, users: message.to }).exec()
+    const existingConversation = await Conversation.findOne({ users: [message.from, message.to] }).exec()
 
     console.log(existingConversation);
 
     if(existingConversation) {
-        await Conversation.findOneAndUpdate({users: message.from, users: message.to}, {$push:{messages: message._id}},{new: true}).exec()
+        const existingMessage = await Conversation.findOne({$in: { messages: message._id }}).exec()
+        if(!existingMessage) {
+            await Conversation.findOneAndUpdate({users: [message.from, message.to]}, { $push: { messages: message._id }},{new: true}).exec()
+            message.conversation = existingConversation._id
+    
+            message.save()
+        }
     } else {
-        const newConversation = await new Conversation({
+        const newConversation = new Conversation({
             users: [ message.from, message.to ],
             messages: [message._id]
         })
+        const newConversationsaved = newConversation.save()
 
-        newConversation.save( async (err, conversation) => {
-            if (err) {
-                console.log(err)
-                res.status(500).json({ error: err })
-                return
-            }
-            res.json(conversation)
-        })
-
-        message.conversation = newConversation._id
+        message.conversation = newConversationsaved._id
 
         message.save()
     }

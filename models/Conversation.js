@@ -16,8 +16,13 @@ messages: [{
 })
 
 ConversationSchema.post("save", async (conversation) => {
-  // const admin = await User.findOne({role:"admin"}).exec()
-  await User.updateMany({users: conversation.users }, {$push: {conversation: conversation._id }}, { new: true }).exec()
+  await User.updateMany(
+    { _id: { $in: conversation.users }}, 
+    { $push: { conversations: conversation._id }}, 
+    { new: true }
+  ).exec()
+
+  // await User.where({ _id: { $in: conversation.users }}).update({ $push: { conversations: conversation.id }}, { new: true }).exec()
 
 })
 

@@ -13,26 +13,36 @@ try {
         }
         res.json(message)
     })
+
+
 } catch(err) {
     console.log(err)
     res.status(500).json({error: err})
 }
 });
 
-app.get("/", async (req,res)=>{
+app.get("/user/:id_user", async (req,res)=>{
+    const { id_user } = req.params
     try{
-        const message = await Message.find().exec()
+        const message = await Message.find({ $or: [{ from: id_user }, { to: id_user }]})
+            .populate('from')
+            .populate("to")
+            
         res.json(message) 
     } catch (err) {
-    console.log(err)
-    res.status(500).json({error: err})
+        console.log(err)
+        res.status(500).json({error: err})
     }
 })
 
-app.get("/:id_message", async(req, res) => {
+app.get("/message/:id_message", async(req, res) => {
     const { id_message } = req.params
     try{
-        const message = await Message.findById(id_message).populate("from").populate("to").exec()
+        const message = await Message.findById(id_message)
+            .populate("from")
+            .populate("to")
+            .exec()
+
         res.json(message)
     } catch (err) {
         console.log(err)
