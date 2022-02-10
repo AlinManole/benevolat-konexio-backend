@@ -6,9 +6,6 @@ const NewsSchema = Schema({
     },
     content: {
         type: String
-    },
-    status: {
-        type: String
     }
 }, {
     timestamps: true
